@@ -4,11 +4,11 @@
 
 The goal of this package is send email with fluent sintax code.
 
-### Basic use :
+#### Basic use :
 
 First configure your app.config or web.config file with simple configuration
 
-#### Add this section to configSections
+##### Add this section to configSections
 ```cs
 <configSections>
     <section name="emailConfiguration"
@@ -20,7 +20,7 @@ First configure your app.config or web.config file with simple configuration
   </configSections>
 ```
 
-#### then this configuration in any location on config file
+##### then this configuration in any location on config file
 ```cs
 <emailConfiguration>   
       <mainEmailConfiguration>
