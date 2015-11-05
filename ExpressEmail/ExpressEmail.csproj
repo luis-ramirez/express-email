@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,8 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Email.cs" />
+    <Compile Include="Configuration\ExpressEmailConfigurationElement.cs" />
+    <Compile Include="Configuration\ExpressEmailConfiguration.cs" />
+    <Compile Include="Configuration\SmtpConfigurationElement.cs" />
+    <Compile Include="Configuration\SmtpCredetialsElement.cs" />
+    <Compile Include="Exceptions\ExpressEmailFromNotSuppliedException.cs" />
+    <Compile Include="Exceptions\ExpressEmailMailMessageNotSuppliedException.cs" />
+    <Compile Include="Exceptions\ExpressEmailToNotSuppliedException.cs" />
+    <Compile Include="ExpressEmail.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ExpressEmailFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
