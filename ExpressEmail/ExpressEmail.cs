@@ -173,8 +173,33 @@ namespace ExpressEmail
 
         public void Send()
         {
-            ValidateMailMessage();
-            _smtpClient.Send(_mailMessage);
+            try
+            {
+                ValidateMailMessage();
+                _smtpClient.Send(_mailMessage);
+            }
+            catch (ExpressEmailFromNotSuppliedException)
+            {
+                throw;
+            }
+            catch (ExpressEmailMailMessageNotSuppliedException)
+            {
+                throw;
+            }
+            catch (ExpressEmailToNotSuppliedException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                if (_useAlternativeSmtpConfiguration)
+                {
+                    ConfigSmtpClient(_emailConfiguration.AlternativeEmailConfiguration.SmtpConfiguration);
+                    _smtpClient.Send(_mailMessage);
+                }
+                else
+                    throw;
+            }
         }
 
         private void ValidateMailMessage()
@@ -201,14 +226,13 @@ namespace ExpressEmail
 
         private void ConfigMailMessage()
         {
+            _mailMessage = new MailMessage();
+
             if (!_emailConfiguration.MainEmailConfiguration.FromEmail.IsNullOrWhiteSpace())
             {
-                _mailMessage = new MailMessage
-                {
-                    From =
-                        new MailAddress(_emailConfiguration.MainEmailConfiguration.FromEmail,
-                            _emailConfiguration.MainEmailConfiguration.FromName)
-                };
+                _mailMessage.From =
+                    new MailAddress(_emailConfiguration.MainEmailConfiguration.FromEmail,
+                        _emailConfiguration.MainEmailConfiguration.FromName);
             }
 
             if (!_emailConfiguration.MainEmailConfiguration.ToEmail.IsNullOrWhiteSpace())
